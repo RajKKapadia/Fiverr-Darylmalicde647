@@ -1,24 +1,17 @@
-def generate_messages(messages: list, query: str) -> list:
-    formated_messages = [
-        {
-            'role': 'system',
-            'content': 'You are a helpful assistant.'
-        }
-    ]
-    for m in messages:
-        formated_messages.append({
-            'role': 'user',
-            'content': m['query']
-        })
-        formated_messages.append({
-            'role': 'system',
-            'content': m['response']
-        })
-    formated_messages.append(
-        {
-            'role': 'user',
-            'content': query
-        }
-    )
+import json
 
-    return formated_messages
+import config
+
+
+def get_thread_id_from_recipient_id(recipient_id: str) -> str | None:
+    with open(config.MAPPING_JSON_FILE_PATH, 'r') as file:
+        mapping_data = dict(json.loads(file.read()))
+    thread_id = mapping_data['mappings'].get(recipient_id)
+    return thread_id
+
+
+def update_thread_id_from_recipient_id(recipient_id: str, thread_id: str) -> None:
+    with open(config.MAPPING_JSON_FILE_PATH, 'w') as file:
+        mapping_data = dict(json.loads(file.read()))
+    mapping_data['mappings'].update({recipient_id: thread_id})
+    return None
