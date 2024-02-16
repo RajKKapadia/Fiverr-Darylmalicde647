@@ -44,6 +44,3 @@ def ask_openai_assistant(query: str, recipient_id: str) -> str:
         return message_text
     except:
         return config.ERROR_MESSAGE
-
-
-ask_openai_assistant('hi', '3126535660752616')

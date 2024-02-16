@@ -3,7 +3,6 @@ import threading
 
 from flask import Flask, request
 
-from utils import call_ask_openai_assistant_and_send_message_to_fb_messenger
 from openai_api import ask_openai_assistant
 from fb_graph_api import send_message_to_fb_messenger
 import config
@@ -34,8 +33,8 @@ def facebook_get():
 
 def call_ask_openai_assistant_and_send_message_to_fb_messenger(query: str, recipient_id: str) -> str:
     message_text = ask_openai_assistant(query, recipient_id)
-    send_message_to_fb_messenger(recipient_id, message_text)
     print(message_text)
+    send_message_to_fb_messenger(recipient_id, message_text)
 
 
 @app.route('/facebook', methods=['POST'])
